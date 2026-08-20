@@ -1,623 +1,752 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>P2P Payment</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Airtel</title>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Inter, sans-serif;
         }
-        
+
         html,
         body {
-            overflow-x: hidden;
-        }
-        
-        body {
-            background: #f7f8fb;
-            color: #222;
             min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
-        /* NAVBAR */
-        
-        .navbar {
-            height: 70px;
-            background: #0d1018;
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(10px, 2vw, 20px);
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            width: 100%;
+            max-width: 480px;
+            padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px);
+
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+
+            margin-bottom: clamp(5px, 2vw, 10px);
         }
-        
-        .logo {
-            font-size: 34px;
-            font-weight: 800;
-            color: #ff4444;
-            cursor: pointer;
-        }
-        
-        .logo span {
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            cursor: pointer;
-            font-weight: 500;
-            opacity: .8;
-            transition: .3s;
-        }
-        
-        .nav-links li:hover {
-            opacity: 1;
-            color: #ff4444;
-        }
-        
-        .nav-links li.active {
-            color: #ff4444;
-            opacity: 1;
-            border-bottom: 3px solid #ff4444;
-            padding-bottom: 18px;
-        }
-        
-        .profile {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #ff4444;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        /* CONTENT */
-        
-        .container {
-            max-width: 900px;
-            margin: 50px auto 120px;
-            padding: 0 20px;
-        }
-        
-        .title {
-            text-align: center;
-            font-size: 48px;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-        
-        .subtitle {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 20px;
-            color: #666;
-        }
-        
-        .card {
-            margin-top: 35px;
-            background: white;
-            border-radius: 18px;
-            padding: 35px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
-        }
-        
-        .header {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-        
-        .circle {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            flex-shrink: 0;
-        }
-        
-        .green {
-            background: #ddfff0;
-            color: #0ba86f;
-        }
-        
-        .red {
-            background: #ffecec;
-            color: #ff3d3d;
-        }
-        
-        .header h2 {
-            font-size: 38px;
-            margin-bottom: 10px;
-            word-break: break-word;
-        }
-        
-        .header p {
-            font-size: 20px;
-            color: #666;
-            line-height: 1.5;
-        }
-        
-        .info {
-            background: #f7fbff;
-            border: 1px solid #dcecff;
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 25px;
-        }
-        
-        .info strong {
-            display: block;
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-        
-        .info p {
-            font-size: 18px;
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .primary {
-            margin-top: 30px;
-            width: 100%;
-            height: 70px;
+
+        /* MENU BUTTON */
+
+        .menu-btn {
+            font-size: clamp(24px, 6vw, 28px);
+            background: none;
             border: none;
-            border-radius: 12px;
-            background: #ff2b37;
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
             cursor: pointer;
-            transition: .3s;
-        }
-        
-        .primary:hover {
-            background: #df1825;
-        }
-        
-        .warning {
-            background: #fff7f7;
-            border: 1px solid #ffd8d8;
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 25px;
-        }
-        
-        .warning ul {
-            padding-left: 25px;
-        }
-        
-        .warning li {
-            font-size: 19px;
-            margin: 16px 0;
-            color: #555;
-            line-height: 1.5;
-        }
-        
-        .outline {
-            margin-top: 30px;
-            width: 100%;
-            height: 70px;
-            background: white;
-            border: 2px solid #ff2b37;
-            border-radius: 12px;
-            color: #ff2b37;
-            font-size: 24px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: .3s;
-        }
-        
-        .outline:hover {
-            background: #fff0f0;
-        }
-        
-        .support {
-            margin: 35px 0;
-            text-align: center;
-            font-size: 18px;
-        }
-        
-        .support a {
-            text-decoration: none;
-            color: #ff2b37;
-            font-weight: 700;
-        }
-        /* Bottom Navigation */
-        
-        .bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 78px;
-            background: white;
+            color: #333;
+
+            width: 40px;
+            height: 40px;
+
             display: flex;
-            justify-content: space-around;
             align-items: center;
-            box-shadow: 0 -3px 10px rgba(0, 0, 0, .08);
-            z-index: 100;
+            justify-content: center;
+
+            padding: 0;
         }
-        
-        .item {
-            text-align: center;
-            font-size: 14px;
-            color: #666;
-            cursor: pointer;
-            flex: 1;
-            padding: 8px 0;
-            transition: .3s;
+
+        /* LOGO */
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: auto;
+            height: 40px;
+
+            flex-shrink: 0;
         }
-        
-        .item:hover {
-            color: #ff2b37;
-        }
-        
-        .item .icon {
-            font-size: 28px;
-            margin-bottom: 6px;
+
+        .logo img {
+            width: 110px;
+            height: 40px;
+
+            object-fit: contain;
+            object-position: center;
+
             display: block;
         }
-        
-        .plus {
-            width: 58px;
-            height: 58px;
-            background: #ff2b37;
-            color: white;
+
+        /* RIGHT SIDE SPACER */
+
+        .header-spacer {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* =========================
+           MAIN CARD
+        ========================= */
+
+        .card {
+            background: white;
+
+            border-radius: clamp(16px, 5vw, 24px);
+
+            padding:
+                clamp(24px, 6vw, 32px)
+                clamp(20px, 5vw, 28px);
+
+            width: 100%;
+            max-width: 480px;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+
+            text-align: center;
+
             display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            font-size: 36px;
-            margin-top: -35px;
-            box-shadow: 0 8px 20px rgba(255, 0, 0, .3);
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* DESKTOP */
+
+        @media (min-width: 769px) {
+
+            body {
+                padding: clamp(15px, 3vw, 20px);
+                justify-content: center;
+            }
+
+            .card {
+                padding:
+                    clamp(30px, 5vw, 40px)
+                    clamp(25px, 4vw, 30px);
+            }
+        }
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .title {
+            font-size: clamp(22px, 5vw, 26px);
+            font-weight: 700;
+
+            color: #333;
+
+            margin-bottom: clamp(4px, 1.5vw, 6px);
+        }
+
+        .subtitle {
+            font-size: clamp(13px, 3.5vw, 15px);
+
+            color: #777;
+
+            margin-bottom: clamp(18px, 5vw, 24px);
+        }
+
+        /* =========================
+           CALCULATOR
+        ========================= */
+
+        .calc-section {
+            background: #f8f9ff;
+
+            border-radius: clamp(15px, 4vw, 20px);
+
+            padding: clamp(18px, 5vw, 24px);
+
+            margin-bottom: clamp(18px, 5vw, 24px);
+
+            text-align: left;
+        }
+
+        .calc-title {
+            font-size: clamp(16px, 4vw, 19px);
+
+            font-weight: 600;
+
+            text-align: center;
+
+            margin-bottom: clamp(18px, 5vw, 24px);
+
+            color: #333;
+        }
+
+        /* =========================
+           INPUT GROUP
+        ========================= */
+
+        .input-group {
+            margin-bottom: clamp(24px, 7vw, 32px);
+        }
+
+        .input-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: clamp(8px, 2vw, 10px);
+
+            font-weight: 600;
+
+            font-size: clamp(13px, 3.5vw, 15px);
+        }
+
+        .input-label {
+            color: #333;
+        }
+
+        .input-value {
+            color: #4361ee;
+
+            font-weight: 700;
+        }
+
+        /* =========================
+           SLIDER
+        ========================= */
+
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+
+            width: 100%;
+            height: 8px;
+
+            border-radius: 4px;
+
+            background: #e0e0e0;
+
+            outline: none;
+
             cursor: pointer;
+        }
+
+        /* Chrome / Edge / Safari */
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+
+            width: clamp(24px, 6vw, 28px);
+            height: clamp(24px, 6vw, 28px);
+
+            border-radius: 50%;
+
+            background: #4361ee;
+
+            cursor: pointer;
+        }
+
+        /* Firefox */
+
+        .slider::-moz-range-thumb {
+            width: clamp(24px, 6vw, 28px);
+            height: clamp(24px, 6vw, 28px);
+
+            border-radius: 50%;
+
+            background: #4361ee;
+
+            cursor: pointer;
+
+            border: none;
+        }
+
+        /* =========================
+           RANGE LABELS
+        ========================= */
+
+        .range-labels {
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #999;
+
+            font-size: clamp(12px, 3vw, 14px);
+
+            margin-top: clamp(6px, 2vw, 8px);
+        }
+
+        /* =========================
+           PAYMENT BOX
+        ========================= */
+
+        .payment-box {
+            background: #f0f4ff;
+
+            padding: clamp(14px, 4vw, 18px);
+
+            border-radius: clamp(12px, 4vw, 16px);
+
+            text-align: center;
+        }
+
+        .payment-label {
+            display: block;
+
+            color: #666;
+
+            margin-bottom: clamp(6px, 2vw, 8px);
+
+            font-size: clamp(12px, 3vw, 14px);
+        }
+
+        .payment-amount {
+            font-size: clamp(26px, 7vw, 30px);
+
+            font-weight: 700;
+
+            color: #4361ee;
+        }
+
+        /* =========================
+           APPLY BUTTON
+        ========================= */
+
+        .apply-btn {
+            width: 100%;
+
+            padding: clamp(12px, 4vw, 16px);
+
+            background: linear-gradient(
+                to right,
+                #4361ee,
+                #7209b7
+            );
+
+            color: white;
+
+            border: none;
+
+            border-radius: 50px;
+
+            font-size: clamp(16px, 4vw, 18px);
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            margin-bottom: clamp(18px, 5vw, 24px);
+
+            transition: opacity 0.2s ease,
+                        transform 0.2s ease;
+        }
+
+        .apply-btn:hover {
+            opacity: 0.92;
+        }
+
+        .apply-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+            display: flex;
+
+            justify-content: space-around;
+
+            flex-wrap: wrap;
+
+            gap: clamp(10px, 3vw, 20px);
+        }
+
+        .feature {
+            text-align: center;
+
+            color: #777;
+
+            font-size: clamp(11px, 3vw, 13px);
+
+            flex: 1 0 100px;
+        }
+
+        .feature-icon {
+            font-size: clamp(32px, 8vw, 36px);
+
+            margin-bottom: clamp(6px, 2vw, 8px);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: clamp(10px, 3vw, 15px);
+
+            color: #aaa;
+
+            font-size: clamp(11px, 3vw, 13px);
+
+            text-align: center;
+
             flex-shrink: 0;
-            transition: .3s;
         }
-        
-        .plus:hover {
-            transform: scale(1.08);
-        }
-        /* ===== RESPONSIVE: Tablets (max-width 768px) ===== */
-        
-        @media(max-width:768px) {
-            .navbar {
-                padding: 0 20px;
-            }
-            .nav-links {
-                display: none;
-            }
-            .container {
-                padding: 0 16px;
-                margin-top: 30px;
-            }
-            .title {
-                font-size: 34px;
-            }
-            .subtitle {
-                font-size: 17px;
-                padding: 0 10px;
-            }
-            .card {
-                padding: 25px 20px;
-                border-radius: 14px;
-            }
-            .header {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            .header h2 {
-                font-size: 28px;
-            }
-            .header p {
-                font-size: 17px;
-            }
-            .info {
-                padding: 20px;
-            }
-            .info strong {
-                font-size: 19px;
-            }
-            .info p {
-                font-size: 16px;
-            }
-            .warning {
-                padding: 20px;
-            }
-            .warning li {
-                font-size: 16px;
-            }
-            .primary,
-            .outline {
-                height: 60px;
-                font-size: 20px;
-            }
-        }
-        /* ===== RESPONSIVE: Small phones (max-width 480px) ===== */
-        
-        @media(max-width:480px) {
-            .navbar {
-                height: 60px;
-                padding: 0 15px;
-            }
+
+        /* =========================
+           MOBILE LOGO
+        ========================= */
+
+        @media (max-width: 480px) {
+
             .logo {
-                font-size: 26px;
+                height: 38px;
             }
-            .logo span {
-                font-size: 15px;
-            }
-            .profile {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
-            }
-            .title {
-                font-size: 26px;
-            }
-            .subtitle {
-                font-size: 15px;
-                margin-top: 10px;
-            }
-            .card {
-                padding: 20px 16px;
-                margin-top: 25px;
-            }
-            .circle {
-                width: 70px;
-                height: 70px;
-                font-size: 30px;
-            }
-            .header h2 {
-                font-size: 23px;
-            }
-            .header p {
-                font-size: 15px;
-            }
-            .info strong {
-                font-size: 17px;
-            }
-            .info p {
-                font-size: 15px;
-            }
-            .warning li {
-                font-size: 14px;
-                margin: 12px 0;
-            }
-            .primary,
-            .outline {
-                height: 55px;
-                font-size: 17px;
-                border-radius: 10px;
-            }
-            .support {
-                font-size: 15px;
-                margin: 25px 0;
-            }
-            .bottom {
-                height: 68px;
-            }
-            .item {
-                font-size: 12px;
-            }
-            .item .icon {
-                font-size: 22px;
-                margin-bottom: 4px;
-            }
-            .plus {
-                width: 50px;
-                height: 50px;
-                font-size: 30px;
-                margin-top: -30px;
-            }
-        }
-        /* ===== RESPONSIVE: Very small screens (max-width 360px) ===== */
-        
-        @media(max-width:360px) {
-            .title {
-                font-size: 22px;
-            }
-            .header h2 {
-                font-size: 20px;
-            }
-            .primary,
-            .outline {
-                font-size: 15px;
-                height: 52px;
+
+            .logo img {
+                width: 100px;
+                height: 38px;
             }
         }
     </style>
-
 </head>
 
 <body>
 
-    <nav class="navbar">
+    <!-- HEADER -->
+    <header>
 
-        <div class="logo" onclick="goToDeriv()">deriv <span>P2P</span></div>
+        <button class="menu-btn" aria-label="Menu">
+            ☰
+        </button>
 
-        <ul class="nav-links">
+        <div class="logo">
+            <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwKPIUOxpuuEY1j3YBezDsKGUqWQ8aZNoh7dFU4nzwiw&s=10"
+                alt="EcoCash"
+            >
+        </div>
 
-            <li class="active" onclick="goToDeriv()">P2P Trading</li>
-            <li onclick="goToDeriv()">My trades</li>
-            <li onclick="goToDeriv()">My offers</li>
-            <li onclick="goToDeriv()">Wallet</li>
-            <li onclick="goToDeriv()">Notifications</li>
+        <div class="header-spacer"></div>
 
-        </ul>
+    </header>
 
-        <div class="profile" onclick="goToDeriv()">DU</div>
 
-    </nav>
+    <!-- MAIN CARD -->
+    <main class="card">
 
-    <div class="container">
+        <div>
 
-        <h1 class="title">Payment in progress</h1>
+            <h1 class="title">
+                Obtenez votre prêt rapidement
+            </h1>
 
-        <p class="subtitle">
-            Please check your payment details and take action
-        </p>
+            <p class="subtitle">
+                Approbation rapide • Taux compétitifs • Conditions flexibles
+            </p>
 
-        <div class="card">
 
-            <div class="header">
+            <!-- LOAN CALCULATOR -->
+            <div class="calc-section">
 
-                <div class="circle green">
-                    ⬇
+                <h2 class="calc-title">
+                    Calculateur de prêt
+                </h2>
+
+
+                <!-- LOAN AMOUNT -->
+                <div class="input-group">
+
+                    <div class="input-header">
+
+                        <span class="input-label">
+                            Montant du prêt
+                        </span>
+
+                        <span
+                            class="input-value"
+                            id="amountValue"
+                        >
+                            $5,000
+                        </span>
+
+                    </div>
+
+
+                    <input
+                        type="range"
+                        class="slider"
+                        min="100"
+                        max="5000"
+                        value="5000"
+                        id="amountSlider"
+                    >
+
+
+                    <div class="range-labels">
+
+                        <span>$100</span>
+
+                        <span>$5,000</span>
+
+                    </div>
+
                 </div>
 
-                <div>
 
-                    <h2>Accept payment</h2>
+                <!-- LOAN TERM -->
+                <div class="input-group">
 
-                    <p>
-                        Link your wallet to receive payments from buyers securely.
-                    </p>
+                    <div class="input-header">
+
+                        <span class="input-label">
+                            Durée du prêt
+                        </span>
+
+                        <span
+                            class="input-value"
+                            id="termValue"
+                        >
+                            12 mois
+                        </span>
+
+                    </div>
+
+
+                    <input
+                        type="range"
+                        class="slider"
+                        min="6"
+                        max="60"
+                        step="6"
+                        value="12"
+                        id="termSlider"
+                    >
+
+
+                    <div class="range-labels">
+
+                        <span>6 mois</span>
+
+                        <span>60 mois</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MONTHLY PAYMENT -->
+                <div class="payment-box">
+
+                    <span class="payment-label">
+                        Paiement mensuel
+                    </span>
+
+                    <span
+                        class="payment-amount"
+                        id="paymentAmount"
+                    >
+                        $450.00
+                    </span>
 
                 </div>
 
             </div>
 
-            <div class="info">
 
-                <strong>
-Make sure you have received the full amount in your account
-</strong>
-
-                <p>
-                    Only confirm the payment once you have received the exact amount.
-                </p>
-
-            </div>
-
-            <button class="primary" id="acceptBtn">
-💳 Link wallet to receive payment
-</button>
+            <!-- APPLY -->
+            <button
+                class="apply-btn"
+                id="applyBtn"
+            >
+                FAIRE UNE DEMANDE
+            </button>
 
         </div>
 
-        <div class="card">
 
-            <div class="header">
+        <!-- FEATURES -->
+        <div class="features">
 
-                <div class="circle red">
-                    ✕
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ⚡
                 </div>
 
-                <div>
+                Approbation rapide
+                <br>
+                Sous 24 heures
 
-                    <h2>Cancel payment</h2>
+            </div>
 
-                    <p>
-                        Cancel this payment if you no longer wish to sell.
-                    </p>
 
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💰
                 </div>
 
-            </div>
-
-            <div class="warning">
-
-                <ul>
-
-                    <li>Cancel only if you haven't received any payment.</li>
-
-                    <li>Cancelling too often may affect your trading experience.</li>
-
-                    <li>The trade will be cancelled and the crypto returned to your wallet.</li>
-
-                </ul>
+                Taux avantageux
+                <br>
+                À partir de 8 %
 
             </div>
 
-            <button class="outline" id="cancelBtn">
-Cancel payment
-</button>
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🔒
+                </div>
+
+                Sécurisé
+                <br>
+                Niveau bancaire
+
+            </div>
 
         </div>
 
-        <div class="support">
+    </main>
 
-            Need help?
 
-            <a href="#" onclick="goToDeriv(event)">Contact P2P support</a>
+    <!-- FOOTER -->
+    <footer>
+© 2026 Airtel Congo. Tous droits réservés.
+    </footer>
 
-        </div>
 
-    </div>
-
-    <div class="bottom">
-
-        <div class="item" onclick="goToDeriv()">
-
-            <span class="icon">🏠</span> Home
-
-        </div>
-
-        <div class="item" onclick="goToDeriv()">
-
-            <span class="icon">⇄</span> P2P
-
-        </div>
-
-        <div class="plus" onclick="goToDeriv()">
-
-            +
-
-        </div>
-
-        <div class="item" onclick="goToDeriv()">
-
-            <span class="icon">📄</span> Trades
-
-        </div>
-
-        <div class="item" onclick="goToDeriv()">
-
-            <span class="icon">👤</span> Profile
-
-        </div>
-
-    </div>
-
+    <!-- JAVASCRIPT -->
     <script>
-        // Navigate to deriv.html
-        function goToDeriv(event) {
-            if (event) event.preventDefault(); // stops the # link from jumping to top
-            window.location.href = "deriv.html";
+
+        const amountSlider =
+            document.getElementById('amountSlider');
+
+        const termSlider =
+            document.getElementById('termSlider');
+
+        const amountValue =
+            document.getElementById('amountValue');
+
+        const termValue =
+            document.getElementById('termValue');
+
+        const paymentAmount =
+            document.getElementById('paymentAmount');
+
+        const applyBtn =
+            document.getElementById('applyBtn');
+
+
+        /* =========================
+           CALCULATE MONTHLY PAYMENT
+        ========================= */
+
+        function updateCalculator() {
+
+            const amount =
+                parseFloat(amountSlider.value);
+
+            const moiss =
+                parseFloat(termSlider.value);
+
+
+            amountValue.textContent =
+                '$' + amount.toLocaleString();
+
+
+            termValue.textContent =
+                moiss +
+                (moiss === 1
+                    ? ' mois'
+                    : ' moiss'
+                );
+
+
+            const annualRate = 0.08;
+
+            const moislyRate =
+                annualRate / 12;
+
+
+            if (moiss === 0) {
+
+                paymentAmount.textContent =
+                    '$' + amount.toFixed(2);
+
+            } else {
+
+                const power =
+                    Math.pow(
+                        1 + moislyRate,
+                        moiss
+                    );
+
+
+                const moislyPayment =
+                    amount *
+                    (moislyRate * power) /
+                    (power - 1);
+
+
+                paymentAmount.textContent =
+                    '$' +
+                    moislyPayment.toFixed(2);
+            }
         }
 
-        // Accept button
-        document.getElementById("acceptBtn").onclick = goToDeriv;
 
-        // Cancel button
-        document.getElementById("cancelBtn").onclick = goToDeriv;
+        /* INITIAL CALCULATION */
+
+        updateCalculator();
+
+
+        /* UPDATE WHEN SLIDERS MOVE */
+
+        amountSlider.addEventListener(
+            'input',
+            updateCalculator
+        );
+
+        termSlider.addEventListener(
+            'input',
+            updateCalculator
+        );
+
+
+        /* APPLY BUTTON */
+
+        applyBtn.addEventListener(
+            'click',
+            function () {
+
+                localStorage.setItem(
+                    'loanAmount',
+                    amountSlider.value
+                );
+
+                localStorage.setItem(
+                    'loanTerm',
+                    termSlider.value
+                );
+
+                window.location.href =
+                    'application.html';
+
+            }
+        );
+
     </script>
 
 </body>
